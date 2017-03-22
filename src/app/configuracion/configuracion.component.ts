@@ -1,0 +1,28 @@
+import { Component, OnInit } from '@angular/core';
+import { ConfigurationService } from "./../configuration.service";
+import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
+import { Configuracion } from './configuracion.model';
+
+@Component({
+	selector: 'configuracion',
+    templateUrl: './configuracion.component.html' 
+})
+
+export class ConfiguracionComponent implements OnInit{
+
+    configuracion: Configuracion;
+
+    constructor(private _configurationService: ConfigurationService,private router: Router) { }
+
+    ngOnInit() {
+        this.configuracion = this._configurationService.configuracion;
+    }
+
+    onSubmit(value: any){
+        
+        
+        this.configuracion = { activa: 0.5, desplazamiento: 10, escalaX: Number.parseFloat(value.optionsRadios)};
+        this._configurationService.changeConfiguracion(this.configuracion);
+    }
+}

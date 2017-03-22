@@ -1,0 +1,51 @@
+
+<form  (ngSubmit)="onSubmit(f.value)" #f="ngForm">
+        <div class="form-group">
+            <label for="desplazamiento">Desplazamiento</label>
+            <input type="text" class="form-control"  name="desplazamiento" ngModel required />
+        </div>
+
+        <fieldset class="form-group">
+            <legend>Timeline</legend>
+            <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="optionsRadios"  ngModel value="0.2" checked>
+                    0.2 s
+                    </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="optionsRadios"  ngModel  value="1">
+                    1 s
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="optionsRadios"  ngModel  value="5" >
+                    5 s
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="optionsRadios"  ngModel  value="10" >
+                    10 s
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="optionsRadios"  ngModel  value="30" >
+                    30 s
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="optionsRadios"  ngModel  value="60" >
+                    60 s
+                </label>
+            </div>
+        </fieldset>
+
+        <div class="form-group text-right">
+            <button [disabled]="loading" class="btn btn-primary">Sign In</button>
+        </div>
+    </form>

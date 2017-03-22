@@ -1,0 +1,12 @@
+
+<div *ngIf="mostrar" >
+  <chart [options]="options" (load)="saveChart($event.context)" (selection)="onChartSelection($event)" style="min-width: 1150px; min-height: 250px" >
+            <series>
+              <point (select)="onPointSelect($event)"></point>
+            </series> 
+  </chart>
+</div>
+
+
+
+

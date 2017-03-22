@@ -1,20 +1,50 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-
+import { NgModule } from '@angular/core';
+import { HttpModule, JsonpModule } from '@angular/http';
+import { ChartModule } from 'angular2-highcharts';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
+import { AlertModule } from 'ng2-bootstrap/alert';
 import { AppComponent } from './app.component';
+import { GraficaComponent } from './graficas/grafica.component';
+import { ConfiguracionComponent } from './configuracion/configuracion.component';
+import { GraficasComponent } from './graficas/graficas.component';
+import { RegistrosComponent } from './registros/registros.component';
+import { RegistrarseComponent } from './usuarios/registrarse.component';
+import { SidebarModule } from 'ng-sidebar';
+import { UploadComponent } from './upload/upload.component';
+import { LoginComponent } from'./usuarios/login.component';
+import { MenuComponent } from './menu.component';
+import { CONST_ROUTING } from './app.routing'; 
+import { SharedService } from "./shared.service";
+import { ConfigurationService } from './configuration.service';
+import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
+
+
+export function highchartsFactory() {
+  return require('highcharts/highstock');
+} 
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent, GraficaComponent, MenuComponent,GraficasComponent, ConfiguracionComponent, RegistrarseComponent, RegistrosComponent ,UploadComponent, LoginComponent],
   imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule
+    BrowserModule, 
+    FormsModule, 
+    HttpModule, 
+    JsonpModule,
+    CONST_ROUTING,
+    AlertModule.forRoot(),
+    NgbModule.forRoot(),
+    ChartModule
   ],
-  providers: [],
+  providers: [SharedService, ConfigurationService,
+  {
+      provide: HighchartsStatic,
+      useFactory: highchartsFactory
+    },
+  ],
   bootstrap: [AppComponent]
 })
+
+
 export class AppModule { }

@@ -1,0 +1,33 @@
+
+
+  <div class="jumbotron">
+    <h2>Subir Registro</h2>
+    <form #form="ngForm" (ngSubmit)="submitForm(form.value)">
+      <div class="form-group">
+        <label >Archivo Cabecera:
+          <input type="file" (change)="onChangeCabecera($event)" class="form-control-file"  required/>
+        </label>
+        <br>
+        <label>Archivos Adjuntos:
+          <input type="file" (change)="onChangeFiles($event)" class="form-control-file" multiple requiered />
+        </label>
+        <br>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-default">Submit</button>
+      </div>
+    </form>
+
+    <div *ngFor="let alert of alerts">
+      <alert type="{{alert.type}}" dismissOnTimeout="6000">{{ alert.msg }}</alert>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+

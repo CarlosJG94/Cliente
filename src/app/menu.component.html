@@ -1,0 +1,15 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" [routerLink]="['/Graficas']">BD Impedancia Torácica</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a [routerLink]="['/Records']"><span class="glyphicon glyphicon-folder-open"></span>    Records</a></li>
+            <li><a [routerLink]="['/Upload']"><span class="glyphicon glyphicon-cloud-upload"></span>  Upload</a></li>
+            <li><a><span class="glyphicon glyphicon-user"></span> {{usuario}}</a></li>
+            <li><a [routerLink]="['/Login']" (click)="loginOrOut()"><span class="glyphicon glyphicon-log-in"></span> {{loginLogoutText}}</a></li>
+          </ul>   
+        </div>
+      </div>
+    </nav>

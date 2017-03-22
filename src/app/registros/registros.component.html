@@ -1,0 +1,26 @@
+
+  <div class="panel panel-primary text-center">
+      <div class="panel-heading text-center"><h4>Records</h4></div>
+  <!-- Table -->
+  <table class="table table-striped text-center">
+    <thead>
+      <tr>
+        <th class="text-center">Name</th>
+        <th class="text-center">Length</th>
+        <th class="text-center">Date Upload</th>
+      </tr>
+    </thead>
+  <tbody>
+   <tr *ngFor="let registro of registros">
+      <td>{{registro.titulo}}</td>
+      <td>{{registro.duracion}}</td>
+      <td>{{registro.fecha}}</td>
+      <td><button  class="btn btn-primary" (click)=onClick(registro.titulo,registro.duracion)>View</button></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
