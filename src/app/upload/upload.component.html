@@ -1,13 +1,14 @@
 
 
-  <div class="jumbotron">
-    <h2>Subir Registro</h2>
+  <div class="panel panel-primary text-center">
+      <div class="panel-heading text-center"><h4>Upload Records</h4></div>
     <form #form="ngForm" (ngSubmit)="submitForm(form.value)">
       <div class="form-group">
-        <label >Archivo Cabecera:
+        <label class="btn btn-default btn-file">Archivo Cabecera:
           <input type="file" (change)="onChangeCabecera($event)" class="form-control-file"  required/>
         </label>
-        <br>
+      </div>
+      <div class="form-group">
         <label>Archivos Adjuntos:
           <input type="file" (change)="onChangeFiles($event)" class="form-control-file" multiple requiered />
         </label>
@@ -17,6 +18,12 @@
         <button type="submit" class="btn btn-default">Submit</button>
       </div>
     </form>
+
+    <div *ngIf="espera" class="progress">
+      <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+        <span class="sr-only">45% Complete</span>
+      </div>
+   </div>
 
     <div *ngFor="let alert of alerts">
       <alert type="{{alert.type}}" dismissOnTimeout="6000">{{ alert.msg }}</alert>

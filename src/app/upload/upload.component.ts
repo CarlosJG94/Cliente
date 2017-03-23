@@ -5,11 +5,13 @@ import {NgForm} from '@angular/forms';
 
 @Component({
 	selector: 'upload',
-    templateUrl: './upload.component.html' 
+    templateUrl: './upload.component.html' ,
+    styleUrls: ['./upload.component.css']
 })
 
 export class UploadComponent implements OnInit{
 
+    espera: boolean = false;
     aux: string;
     cabecera: File;
     files: File[];
@@ -22,6 +24,7 @@ export class UploadComponent implements OnInit{
 	}
 
     submitForm(value: any){
+        this.espera = true;
         let formData: FormData = new FormData();
         if(this.files.length == 0) this.notificar('Se debe adjuntar al menos un Archivo adicional', "warning");
         else{
@@ -32,12 +35,15 @@ export class UploadComponent implements OnInit{
         this._sharedService.uploadRegister(formData)
             .subscribe(
             response => { 
+                this.espera = false;
                 this.notificar(response,"success");
             },
             error => {  
                 if(error.status == 401){
+                    this.espera = false;
                     this.router.navigate(['Login']);
                 }else{
+                    this.espera = false;
                     this.notificar(error.text(),"danger");
                 }
             }

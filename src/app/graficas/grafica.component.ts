@@ -93,13 +93,11 @@ export class GraficaComponent implements OnInit{
     }
 
     pintarEscalas(){
-        //this.chart.xAxis[0].removePlotLine('escalas');
         for(var i=this.grafica.y[0]; i<this.grafica.x.length; i = i + this.configuracion.escalaX){
             this.chart.xAxis[0].addPlotLine({
                 value: i,
                 color: 'black',
                 width: 0.5,
-                id: 'escalas',
             });
         }
     }

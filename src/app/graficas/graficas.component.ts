@@ -39,36 +39,32 @@ export class GraficasComponent implements OnInit {
     this.obtenerInicial(); 
   }
 
-  obtenerInicial() { 
-
-        this._sharedService.getGraficas(this.registro, this.from.toString(),this.to.toString())
-            .subscribe(
-            lstresult => { 
-                this.graficas = lstresult;
-                var i;
-                for(i=0;i<this.graficas.length;i++){
-                    this.visualizar.push(true);
-                }
-            },
-            error => {
-                 this.notificar('El parametro introducido excede el tamaño del registro');
-                 this.from = this.from - this.desplazamiento,
-                 this.to = this.to - this.desplazamiento;
-            }
-            ); 
-    }
-
-
-    obtener() { 
+       obtenerInicial() { 
 
         this._sharedService.getGraficas(this.registro,this.from.toString(),this.to.toString())
             .subscribe(
             lstresult => { 
                 this.graficas = lstresult;
                 var i;
-                for(i=0;i<this.graficas.length;i++){
+                this.visualizar.push(true);
+                for(i=i;i<this.graficas.length;i++){
                     this.visualizar.push(true);
                 }
+            },
+            error => {
+                this.notificar('El parametro introducido excede el tamaño del registro');
+                 this.from = this.from - this.desplazamiento,
+                 this.to = this.to - this.desplazamiento;
+            }
+            ); 
+    }
+
+     obtener() { 
+
+        this._sharedService.getGraficas(this.registro,this.from.toString(),this.to.toString())
+            .subscribe(
+            lstresult => { 
+                this.graficas = lstresult;
             },
             error => {
                 this.notificar('El parametro introducido excede el tamaño del registro');

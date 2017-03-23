@@ -14,21 +14,27 @@ export class RegistrarseComponent {
 
   onSubmit(value: any) {
 
-    let formData: FormData = new FormData();
-    formData.append("username",value.username);
-    formData.append("password",value.password);
-    formData.append('password2',value.password2);
-    formData.append('email',value.email);
+    if(value.password == value.password2){
+        let formData: FormData = new FormData();
+        formData.append("username",value.username);
+        formData.append("password",value.password);
+        formData.append('password2',value.password2);
+        formData.append('email',value.email);
 
-    this._sharedService.registrarse(formData)
-        .subscribe(
-        result => {
-            this.router.navigate(['Records']);
-        },
-        error => {
-            this.notificar('Error');
-        }
-    ); 
+        this._sharedService.registrarse(formData)
+            .subscribe(
+            result => {
+                this.router.navigate(['Records']);
+            },
+            error => {
+                if(error.status == 409){
+                    this.notificar('El Nombre de usuario ya se encuentra en uso');
+                }
+            }
+        ); 
+    }else{
+        this.notificar('Las contraseñas no coinciden');
+    }
     
 
   }
