@@ -20,16 +20,14 @@ export class GraficaComponent implements OnInit{
     chart: any;
     configuracion: Configuracion;
 
-    constructor(private _configurationService: ConfigurationService){
-
-    }
+    constructor(private _configurationService: ConfigurationService){ }
 
 	ngOnInit() {
 
         this.configuracion  = this._configurationService.configuracion;
         this._configurationService.configuracionChange.subscribe((configuracion: Configuracion) => {
             this.configuracion = configuracion;     
-            this.reload();   
+            this.reload();  
         });
 		this.reload();
 	}
@@ -48,17 +46,15 @@ export class GraficaComponent implements OnInit{
             },
 
             xAxis: {
-                gridLineColor: 'black',
-                gridLineWidth: this.configuracion.activa,
+
                 labels: {
                     formatter: function () {
                         return (this.value) + 's';
                     }
                 },  
-                tickInterval: this.configuracion.escalaX,
+                tickInterval: 1,
             },
             yAxis: {
-
                 gridLineColor: 'black',
                 gridLineWidth: 0.5,
                 title: {
@@ -90,7 +86,20 @@ export class GraficaComponent implements OnInit{
             this.chart.xAxis[0].addPlotLine({
                 value: this.grafica.latidos[i],
                 color: '#FA5858',
-                width: 2,
+                width: 1.5,
+            });
+        }
+        this.pintarEscalas();
+    }
+
+    pintarEscalas(){
+        //this.chart.xAxis[0].removePlotLine('escalas');
+        for(var i=this.grafica.y[0]; i<this.grafica.x.length; i = i + this.configuracion.escalaX){
+            this.chart.xAxis[0].addPlotLine({
+                value: i,
+                color: 'black',
+                width: 0.5,
+                id: 'escalas',
             });
         }
     }

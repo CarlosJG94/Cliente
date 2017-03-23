@@ -12,9 +12,7 @@ export class ConfigurationService {
     @Output()
     configuracionChange: EventEmitter<Configuracion> = new EventEmitter<Configuracion>();
 
-    constructor() { 
-        
-    } 
+    constructor() { } 
 
     changeConfiguracion(configuracion: Configuracion){
         this.configuracion = configuracion;

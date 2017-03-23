@@ -79,7 +79,7 @@ export class GraficasComponent implements OnInit {
     }
 
     avanzar(){
-        this.from = this.from + this.desplazamiento,
+        this.from = this.to,
         this.to = this.to + this.desplazamiento;
         this.obtener();
     }
@@ -89,8 +89,8 @@ export class GraficasComponent implements OnInit {
             this.from = 0;
             this.to = this.desplazamiento;
         }else{
-            this.from = this.from - this.desplazamiento,
-            this.to = this.to - this.desplazamiento;
+            this.to = this.from,
+            this.from = this.to - this.desplazamiento;
         }
         this.obtener();
     }

@@ -1,5 +1,5 @@
 
-<form  (ngSubmit)="onSubmit(f.value)" #f="ngForm">
+<form  #f="ngForm">
         <div class="form-group">
             <label for="desplazamiento">Desplazamiento</label>
             <input type="text" class="form-control"  name="desplazamiento" ngModel required />
@@ -46,6 +46,6 @@
         </fieldset>
 
         <div class="form-group text-right">
-            <button [disabled]="loading" class="btn btn-primary">Sign In</button>
+            <button [disabled]="loading" class="btn btn-primary" (click)="onSubmit(f.value)">Sign In</button>
         </div>
     </form>
