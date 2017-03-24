@@ -6,6 +6,7 @@ import { GraficaComponent } from './grafica.component';
 import { AlertModule } from 'ng2-bootstrap/alert';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Configuracion } from '../configuracion/configuracion.model';
+import { ConfiguracionY } from '../configuracion/configuracionY.model'
 
 @Component({
   selector: 'app-graficas',
@@ -17,6 +18,7 @@ export class GraficasComponent implements OnInit {
     signal: boolean = false;
     alerts: any = []; 
     visualizar: boolean[] = [];
+    configuracionY: ConfiguracionY[] = [];
     graficas: Grafica[] = [];
     desplazamiento: number;
     from:number;
@@ -45,10 +47,17 @@ export class GraficasComponent implements OnInit {
             .subscribe(
             lstresult => { 
                 this.graficas = lstresult;
-                var i;
+                var i = 0;
                 this.visualizar.push(true);
+                var configuracionAux: ConfiguracionY = { activa: true, id: i, max: 0, min: 0, tick: 0}; 
+                this.configuracionY.push(configuracionAux);
+                this.graficas[i].configuracionY = this.configuracionY[i];
                 for(i=i;i<this.graficas.length;i++){
-                    this.visualizar.push(true);
+                    this.visualizar.push(false);
+                    var configuracionAux: ConfiguracionY = { activa: true, id: i, max: 0, min: 0, tick: 0}; 
+                    this.configuracionY.push(configuracionAux);
+                    this.graficas[i].configuracionY = this.configuracionY[i];
+                    
                 }
             },
             error => {
@@ -57,7 +66,7 @@ export class GraficasComponent implements OnInit {
                  this.to = this.to - this.desplazamiento;
             }
             ); 
-    }
+        }
 
      obtener() { 
 
@@ -65,6 +74,9 @@ export class GraficasComponent implements OnInit {
             .subscribe(
             lstresult => { 
                 this.graficas = lstresult;
+                for(var i=0;i<this.configuracionY.length;i++){
+                    this.graficas[i].configuracionY = this.configuracionY[i];
+                }
             },
             error => {
                 this.notificar('El parametro introducido excede el tamaño del registro');

@@ -29,7 +29,8 @@ export class GraficaComponent implements OnInit{
             this.configuracion = configuracion;     
             this.reload();  
         });
-		this.reload();
+        if(!this.grafica.configuracionY.activa) this.reload();
+        else this.reload2();
 	}
     
 	 reload(){
@@ -60,6 +61,51 @@ export class GraficaComponent implements OnInit{
                 title: {
                     text: this.grafica.valorEscala
                 },
+            },
+
+            series: [{ 
+                data: this.obtenerDatos(),
+                color: '#08088A',
+                allowPointSelect: true,
+                type: 'spline'
+            }]
+        };
+    }
+
+    reload2(){
+ 		this.options = {
+             title: {    
+                align: 'right',          
+                text : this.grafica.titulo
+            },            
+			rangeSelector: {
+            	selected: 1
+        	},
+             legend: {
+                enabled: false
+            },
+
+            xAxis: {
+
+                labels: {
+                    formatter: function () {
+                        return (this.value) + 's';
+                    }
+                },  
+                tickInterval: 1,
+            },
+            yAxis: {
+                max: 28,
+                min: 26.5,
+                tickInterval: 0.2,
+                gridLineColor: 'black',
+                gridLineWidth: 0.5,
+                title: {
+                    text: this.grafica.valorEscala
+                },
+                scrollbar: {
+                    enabled: true,
+                }
             },
 
             series: [{ 
