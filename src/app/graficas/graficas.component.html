@@ -9,8 +9,8 @@
     <button (click)="principio()" class="btn btn-default" ><span class="glyphicon glyphicon-fast-backward"></span></button> 
     <button (click)="retroceder()" class="btn btn-default" ><span class="glyphicon glyphicon-backward"></span></button>    
     <label for="formGroupExampleInput">Interval:</label>
-    <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" #desde required placeholder="From">
-    <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" #hasta required placeholder="To">
+    <input type="number" class="form-control mb-2 mr-sm-2 mb-sm-0" #desde required placeholder="From">
+    <input type="number" class="form-control mb-2 mr-sm-2 mb-sm-0" #hasta required placeholder="To">
     <button type="submit" class="btn btn-default" (click)="getIntervalo(desde.value,hasta.value); desde.value=''; hasta.value=''">Go</button>
     <button (click)="signals()" class="btn btn-default">Signals</button>
 

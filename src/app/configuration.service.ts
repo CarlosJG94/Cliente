@@ -3,6 +3,7 @@ import { Http, Headers, Response,RequestOptions, URLSearchParams } from "@angula
 import 'rxjs/Rx';
 import { Observable } from "rxjs";
 import { Configuracion } from './configuracion/configuracion.model';
+import { ConfiguracionY } from './configuracion/configuracionY.model';
 
 @Injectable()
 export class ConfigurationService {
@@ -12,10 +13,17 @@ export class ConfigurationService {
     @Output()
     configuracionChange: EventEmitter<Configuracion> = new EventEmitter<Configuracion>();
 
+    @Output()
+    configuracionYChange: EventEmitter<ConfiguracionY> = new EventEmitter<ConfiguracionY>();
+
     constructor() { } 
 
     changeConfiguracion(configuracion: Configuracion){
         this.configuracion = configuracion;
         this.configuracionChange.emit(this.configuracion);
+    }
+
+    changeConfigurationY(configuracion: ConfiguracionY){
+        this.configuracionYChange.emit(configuracion);
     }
 }

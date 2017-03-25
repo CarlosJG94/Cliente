@@ -3,6 +3,8 @@ import { Grafica } from './grafica.model';
 import { ChartModule } from 'angular2-highcharts'; 
 import { ConfigurationService } from '../configuration.service';
 import { Configuracion } from '../configuracion/configuracion.model';
+import { ConfiguracionY } from '../configuracion/configuracionY.model';
+
 @Component({
 	selector: 'grafica',
     templateUrl: './grafica.component.html' 
@@ -61,6 +63,9 @@ export class GraficaComponent implements OnInit{
                 title: {
                     text: this.grafica.valorEscala
                 },
+                scrollbar: {
+                    enabled: true,
+                }
             },
 
             series: [{ 
@@ -95,9 +100,9 @@ export class GraficaComponent implements OnInit{
                 tickInterval: 1,
             },
             yAxis: {
-                max: 28,
-                min: 26.5,
-                tickInterval: 0.2,
+                max: this.grafica.configuracionY.max,
+                min: this.grafica.configuracionY.min,
+                tickInterval: this.grafica.configuracionY.tick,
                 gridLineColor: 'black',
                 gridLineWidth: 0.5,
                 title: {
@@ -147,6 +152,20 @@ export class GraficaComponent implements OnInit{
             });
         }
     }
+
+    onSubmit(value:any){
+        var configuracionAux: ConfiguracionY = { activa: true, id: this.grafica.configuracionY.id, max: Number.parseFloat(value.maximo), min: Number.parseFloat(value.minimo), tick: Number.parseFloat(value.tick)}; 
+        this.grafica.configuracionY = configuracionAux;
+        this._configurationService.changeConfigurationY(configuracionAux);
+        this.reload2();
+    }
+
+    reset(){
+        this.grafica.configuracionY.activa = false;
+        this.reload();
+        this._configurationService.changeConfigurationY(this.grafica.configuracionY);
+    }
+
 
 }
 

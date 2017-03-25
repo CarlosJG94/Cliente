@@ -34,6 +34,9 @@ export class GraficasComponent implements OnInit {
     this._configurationService.configuracionChange.subscribe((configuracion: Configuracion) => {
         this.desplazamiento = configuracion.desplazamiento;        
     });
+    this._configurationService.configuracionYChange.subscribe((configuracion: ConfiguracionY) => {
+        this.configuracionY[configuracion.id] = configuracion;        
+    });
     this.registro = this.route.snapshot.params['id'];
     this.duracion = Number.parseInt(this.route.snapshot.queryParams['duracion']);
     this.from = 0,
@@ -49,12 +52,12 @@ export class GraficasComponent implements OnInit {
                 this.graficas = lstresult;
                 var i = 0;
                 this.visualizar.push(true);
-                var configuracionAux: ConfiguracionY = { activa: true, id: i, max: 0, min: 0, tick: 0}; 
+                var configuracionAux: ConfiguracionY = { activa: false, id: i, max: 0, min: 0, tick: 0}; 
                 this.configuracionY.push(configuracionAux);
                 this.graficas[i].configuracionY = this.configuracionY[i];
-                for(i=i;i<this.graficas.length;i++){
+                for(i=i+1;i<this.graficas.length;i++){
                     this.visualizar.push(false);
-                    var configuracionAux: ConfiguracionY = { activa: true, id: i, max: 0, min: 0, tick: 0}; 
+                    var configuracionAux: ConfiguracionY = { activa: false, id: i, max: 0, min: 0, tick: 0}; 
                     this.configuracionY.push(configuracionAux);
                     this.graficas[i].configuracionY = this.configuracionY[i];
                     
