@@ -20,8 +20,9 @@ export class ConfiguracionComponent implements OnInit{
     }
 
     onSubmit(value: any){
-        let des = Number.parseInt(value.desplazamiento);
-        this.configuracion = { activa: 0.5, desplazamiento: des, escalaX: Number.parseFloat(value.optionsRadios)};
+        let des = value.desplazamiento;
+        this.configuracion = { activa: this._configurationService.configuracion.activa, desplazamiento: des, escalaX: Number.parseFloat(value.optionsRadios)};
         this._configurationService.changeConfiguracion(this.configuracion);
     }
+
 }

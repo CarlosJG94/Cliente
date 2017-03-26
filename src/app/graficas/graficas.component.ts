@@ -18,6 +18,7 @@ export class GraficasComponent implements OnInit {
     signal: boolean = false;
     alerts: any = []; 
     visualizar: boolean[] = [];
+    escalas: boolean;
     configuracionY: ConfiguracionY[] = [];
     graficas: Grafica[] = [];
     desplazamiento: number;
@@ -31,7 +32,11 @@ export class GraficasComponent implements OnInit {
   ngOnInit() {
 
     this.desplazamiento  = this._configurationService.configuracion.desplazamiento;
+    if(this._configurationService.configuracion.activa == 0) this.escalas = true;
+    else this.escalas = false;
     this._configurationService.configuracionChange.subscribe((configuracion: Configuracion) => {
+        if(configuracion.activa == 0) this.escalas = true;
+        else this.escalas = false;
         this.desplazamiento = configuracion.desplazamiento;        
     });
     this._configurationService.configuracionYChange.subscribe((configuracion: ConfiguracionY) => {
@@ -137,6 +142,15 @@ export class GraficasComponent implements OnInit {
         }else{
             this.visualizar[i] = true;
         }
+    }
+
+    ocultarEscala(){
+        this._configurationService.hideEscalas();
+    }
+
+    cambiarEscala(value: any){
+        if(Number.parseFloat(value) !=0)
+        this._configurationService.changeEscala(Number.parseFloat(value));
     }
 
     notificar(mensaje: string): void {

@@ -1,5 +1,5 @@
 
-<div *ngIf="mostrar" float="right">
+<div *ngIf="mostrar">
 
   <a type="button" class="btn btn-default btn-sm" data-toggle="modal" [attr.data-target]="'#' + grafica.configuracionY.id"><span class="glyphicon glyphicon-cog"></span></a>
   <!-- Modal -->
@@ -10,32 +10,33 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Configuration</h4>
+          <h4 class="modal-title" align="center">Configuration {{grafica.titulo}}</h4>
         </div>
         <div class="modal-body">
-          <form  #f="ngForm">
-            <div class="form-group">
-              <label for="desplazamiento">Maximo</label>
-                <input type="number" class="form-control"  name="maximo" step="any" ngModel required />
+          <form  #f="ngForm" class="form-inline">
+            <div class="input-group mb-2 mr-sm-2 mb-sm-0" >
+              <div class="input-group-addon"><b>Max</b></div>
+                <input type="number" class="form-control"  name="maximo" step="any" style="width: 105px" ngModel required />
+            </div>
+            <div class="input-group mb-2 mr-sm-2 mb-sm-0" >
+              <div class="input-group-addon"><b>Min</b></div>
+                <input type="number" class="form-control"  name="minimo" step="any" value="5" style=" width: 105px" ngModel required />
+            </div>
+            <div class="input-group mb-2 mr-sm-2 mb-sm-0" >
+              <div class="input-group-addon"><b>Tick</b></div>
+                <input type="number" class="form-control"  name="tick" step="any" style=" width: 105px" ngModel required />
             </div>
             <div class="form-group">
-              <label for="desplazamiento">Minimo</label>
-                <input type="number" class="form-control"  name="minimo" step="any" ngModel required />
-            </div>
-            <div class="form-group">
-              <label for="desplazamiento">Tick</label>
-                <input type="number" class="form-control"  name="tick"  step="any"  ngModel required />
-            </div>
-            <div class="form-group text-right">
-              <button [disabled]="loading" class="btn btn-primary" (click)="onSubmit(f.value)">Sign In</button>
-            </div>
-            <div class="form-group text-left">
-              <button [disabled]="loading" class="btn btn-primary" (click)="reset()">Reset</button>
+              <button [disabled]="loading" class="btn btn-primary" (click)="onSubmit(f.value)">Change</button>
             </div>
           </form>
+          <div class="form-group"></div>
+            <div class="form-group text-center">
+              <button  class="btn btn-default" (click)="reset()">Reset</button>
+            </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <div class="modal-footer" >
+          <button type="button" class="btn btn-danger"  data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>

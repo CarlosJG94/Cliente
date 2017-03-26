@@ -28,8 +28,10 @@ export class GraficaComponent implements OnInit{
 
         this.configuracion  = this._configurationService.configuracion;
         this._configurationService.configuracionChange.subscribe((configuracion: Configuracion) => {
-            this.configuracion = configuracion;     
-            this.reload();  
+            this.configuracion = configuracion;
+            if(!this.grafica.configuracionY.activa) this.reload()
+            else this.reload2();
+            
         });
         if(!this.grafica.configuracionY.activa) this.reload();
         else this.reload2();
@@ -59,7 +61,7 @@ export class GraficaComponent implements OnInit{
             },
             yAxis: {
                 gridLineColor: 'black',
-                gridLineWidth: 0.5,
+                gridLineWidth: this.configuracion.activa,
                 title: {
                     text: this.grafica.valorEscala
                 },
@@ -104,7 +106,7 @@ export class GraficaComponent implements OnInit{
                 min: this.grafica.configuracionY.min,
                 tickInterval: this.grafica.configuracionY.tick,
                 gridLineColor: 'black',
-                gridLineWidth: 0.5,
+                gridLineWidth: this.configuracion.activa,
                 title: {
                     text: this.grafica.valorEscala
                 },
@@ -140,7 +142,7 @@ export class GraficaComponent implements OnInit{
                 width: 1.5,
             });
         }
-        this.pintarEscalas();
+        if(this.configuracion.activa != 0) this.pintarEscalas();
     }
 
     pintarEscalas(){
@@ -149,6 +151,7 @@ export class GraficaComponent implements OnInit{
                 value: i,
                 color: 'black',
                 width: 0.5,
+                id: 'escalas',
             });
         }
     }
@@ -165,7 +168,6 @@ export class GraficaComponent implements OnInit{
         this.reload();
         this._configurationService.changeConfigurationY(this.grafica.configuracionY);
     }
-
 
 }
 

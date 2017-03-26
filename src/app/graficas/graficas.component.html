@@ -12,7 +12,19 @@
     <input type="number" class="form-control mb-2 mr-sm-2 mb-sm-0" #desde required placeholder="From">
     <input type="number" class="form-control mb-2 mr-sm-2 mb-sm-0" #hasta required placeholder="To">
     <button type="submit" class="btn btn-default" (click)="getIntervalo(desde.value,hasta.value); desde.value=''; hasta.value=''">Go</button>
-    <button (click)="signals()" class="btn btn-default">Signals</button>
+    <button (click)="signals()" class="btn" [ngClass]="{ 'btn-primary': signal, 'btn-default': !signal}">Signals</button>
+
+  <select class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect" (click)="cambiarEscala($event.target.value)">
+    <option value="0">Time</option>
+    <option value="0.2">0.2 s</option>
+    <option value="1" >1 s</option>
+    <option value="5">5 s</option>
+    <option value="10">10 s</option>
+    <option value="30">30 s</option>
+    <option value="60">60 s</option>
+  </select>
+
+    <button (click)="ocultarEscala()" class="btn" [ngClass]="{ 'btn-default': escalas, 'btn-primary': !escalas}"><span class="glyphicon glyphicon-th"></span></button>
 
   <!-- Trigger the modal with a button -->
   <a type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-cog"></span></a>
@@ -36,18 +48,19 @@
       </div>
     </div>
   </div>
-  
-
     <button (click)="avanzar()" class="btn btn-default"><span class ="glyphicon glyphicon-forward"></span></button>
     <button (click)="final()" class="btn btn-default" ><span class = "glyphicon glyphicon-fast-forward"></span></button> 
 </div>
 
 <br>
 <div  *ngIf="signal" class="form-inline text-center">
-    <button *ngFor="let i of graficas; let k = index" (click)=ocultar(k) class="btn btn-default"  >
-        <span *ngIf="!visualizar[k]"> <s>{{graficas[k].titulo}}</s></span>
-        <span *ngIf="visualizar[k]" >{{graficas[k].titulo}}</span>
+  <div *ngFor="let i of graficas; let k = index" class="form-group">
+    <button  (click)=ocultar(k) class="btn" [ngClass]="{ 'btn-primary': visualizar[k], 'btn-secondary': !visualizar[k]}">
+      {{graficas[k].titulo}}
     </button>
+  <div class="form-group" ></div>
+  </div>
+  
 </div>
 
 <grafica *ngFor="let i of graficas; let k = index" [grafica]="graficas[k]" [mostrar]="visualizar[k]"></grafica>

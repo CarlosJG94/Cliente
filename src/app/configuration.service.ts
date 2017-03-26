@@ -26,4 +26,18 @@ export class ConfigurationService {
     changeConfigurationY(configuracion: ConfiguracionY){
         this.configuracionYChange.emit(configuracion);
     }
+
+    hideEscalas(){
+        if(this.configuracion.activa == 0){
+            this.configuracion.activa = 0.5;
+        }else{
+            this.configuracion.activa = 0;
+        }
+        this.configuracionChange.emit(this.configuracion);
+    }
+
+    changeEscala(valor: number){
+        this.configuracion.escalaX = valor;
+        this.configuracionChange.emit(this.configuracion);
+    }
 }
