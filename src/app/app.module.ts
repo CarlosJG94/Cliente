@@ -7,7 +7,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { AlertModule } from 'ng2-bootstrap/alert';
 import { AppComponent } from './app.component';
 import { GraficaComponent } from './graficas/grafica.component';
-import { ConfiguracionComponent } from './configuracion/configuracion.component';
 import { GraficasComponent } from './graficas/graficas.component';
 import { RegistrosComponent } from './registros/registros.component';
 import { RegistrarseComponent } from './usuarios/registrarse.component';
@@ -26,7 +25,7 @@ export function highchartsFactory() {
 } 
 
 @NgModule({
-  declarations: [AppComponent, GraficaComponent, MenuComponent,GraficasComponent, ConfiguracionComponent, RegistrarseComponent, RegistrosComponent ,UploadComponent, LoginComponent],
+  declarations: [AppComponent, GraficaComponent, MenuComponent,GraficasComponent, RegistrarseComponent, RegistrosComponent ,UploadComponent, LoginComponent],
   imports: [
     BrowserModule, 
     FormsModule, 

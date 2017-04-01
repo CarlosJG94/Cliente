@@ -1,13 +1,17 @@
 
   <div class="panel panel-primary text-center">
-      <div class="panel-heading text-center"><h4>Records</h4></div>
+      <div class="panel-heading text-center"><h4>Records <span class="glyphicon glyphicon-folder-open"></span></h4></div>
   <!-- Table -->
   <table class="table table-striped text-center">
     <thead>
       <tr>
         <th class="text-center">Name</th>
-        <th class="text-center">Length</th>
+        <th class="text-center">Length(s)</th>
         <th class="text-center">Date Upload</th>
+        <th class="text-center">Sex</th>
+        <th class="text-center">Age</th>
+        <th class="text-center">Height(cm)</th>
+        <th class="text-center">Width(Kg)</th>
       </tr>
     </thead>
   <tbody>
@@ -15,7 +19,12 @@
       <td>{{registro.titulo}}</td>
       <td>{{registro.duracion}}</td>
       <td>{{registro.fecha}}</td>
-      <td><button  class="btn btn-primary" (click)=onClick(registro.titulo,registro.duracion)>View</button></td>
+      <td>{{registro.sexo}}</td>
+      <td>{{registro.edad}}</td>
+      <td>{{registro.altura}}</td>
+      <td>{{registro.peso}}</td>
+      <td><button  class="btn btn-info" (click)=signals(registro.titulo,registro.duracion)>Signals</button></td>
+      <td><button  class="btn btn-info" (click)=derivada(registro.titulo,registro.duracion)>dz/dt</button></td>
     </tr>
     </tbody>
   </table>

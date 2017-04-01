@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedService } from "./../shared.service";
 import { ConfigurationService } from './../configuration.service';
+import { Configuracion } from '../configuracion/configuracion.model';
+import { ConfiguracionY } from '../configuracion/configuracionY.model'
 import { Grafica } from './grafica.model';
 import { GraficaComponent } from './grafica.component';
 import { AlertModule } from 'ng2-bootstrap/alert';
 import { Router, Params, ActivatedRoute } from '@angular/router';
-import { Configuracion } from '../configuracion/configuracion.model';
-import { ConfiguracionY } from '../configuracion/configuracionY.model'
+
 
 @Component({
   selector: 'app-graficas',
   templateUrl: './graficas.component.html',
-  styles: []
 })
 export class GraficasComponent implements OnInit {
 
@@ -99,6 +99,13 @@ export class GraficasComponent implements OnInit {
         this.to = this.to + this.desplazamiento;
         this.obtener();
     }
+
+    avanzarM(){
+        let aux = (this.to-this.from)/2;
+        this.from = this.from + aux,
+        this.to = this.to + aux;
+        this.obtener();
+    }
     
     retroceder(){
         if(this.from - this.desplazamiento < 0){
@@ -110,6 +117,19 @@ export class GraficasComponent implements OnInit {
         }
         this.obtener();
     }
+
+    retrocederM(){
+        let aux = (this.to - this.from)/2
+        if(this.from - aux < 0){
+            this.from = 0;
+            this.to = this.desplazamiento;
+        }else{
+            this.to = this.to - aux,
+            this.from = this.from - aux;
+        }
+        this.obtener();
+    }
+
 
     principio(){
         this.from = 0;
@@ -126,12 +146,12 @@ export class GraficasComponent implements OnInit {
 
     getIntervalo(desde: string,hasta: string){
       
-        if(desde == '' || hasta == '') this.notificar("El intervalo introducido no es valido")
-        else if(Number.parseInt(desde) < 0 || Number.parseInt(hasta) <= Number.parseInt(desde)) this.notificar("El intervalo introducido no es valido");
+        if(Number.parseInt(desde) < 0 || Number.parseInt(hasta) <= Number.parseInt(desde)) this.notificar("El intervalo introducido no es valido");
         else{
             this.from = Number.parseInt(desde);
             this.to = Number.parseInt(hasta);
             this.obtener();
+            this.desplazamiento = this.to - this.from;
         }
     }
 
@@ -164,4 +184,6 @@ export class GraficasComponent implements OnInit {
             this.signal = true;
         }
     }
+
+
 }

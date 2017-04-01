@@ -12,7 +12,7 @@ export class MenuComponent implements OnInit {
   usuario: string;
   loginLogoutText: string = 'Login';
 
-  constructor(private _sharedService: SharedService,private router: Router ) { }
+  constructor(private _sharedService: SharedService,private router: Router) { }
 
     ngOnInit() {       
         this.usuario = this._sharedService.usuario;

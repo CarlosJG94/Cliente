@@ -16,11 +16,12 @@ export class UploadComponent implements OnInit{
     cabecera: File;
     files: File[];
     alerts: any = []; 
+    nombres: string;
 
     constructor(private _sharedService: SharedService,private router: Router) { }
 
     ngOnInit() {
-		
+		this.nombres ='';
 	}
 
     submitForm(value: any){
@@ -32,11 +33,15 @@ export class UploadComponent implements OnInit{
             formData.append("files", this.files[i], this.files[i].name);
         }
         formData.append("cabecera",this.cabecera,this.cabecera.name);
+        formData.append("sex", value.sex);
+        formData.append("age",value.age);
+        formData.append("height",value.height);
+        formData.append('width',value.width);
         this._sharedService.uploadRegister(formData)
             .subscribe(
             response => { 
                 this.espera = false;
-                this.notificar(response,"success");
+                this.router.navigate(['Records']);
             },
             error => {  
                 if(error.status == 401){
@@ -54,6 +59,12 @@ export class UploadComponent implements OnInit{
     onChangeFiles(event) {
         var files = event.srcElement.files;
         this.files = files;
+        var aux= '';
+        for (let i = 0; i < this.files.length; i++) {
+           aux = aux +' '+ this.files[i].name;
+        }
+        this.nombres = aux;
+
     }
 
     onChangeCabecera(event) {    
@@ -64,6 +75,14 @@ export class UploadComponent implements OnInit{
 
     notificar(mensaje: string,tipo: string): void {
         this.alerts.push({msg: mensaje,type: tipo});
+    }
+
+    getFiles(){
+        var aux= '';
+        for (let i = 0; i < this.files.length; i++) {
+            aux = aux +','+this.files[i].name
+        }
+        return 'hola';
     }
     
 }

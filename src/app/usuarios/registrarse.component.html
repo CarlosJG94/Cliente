@@ -1,5 +1,9 @@
 <div class="col-md-6 col-md-offset-3">
-    <h2 class="text-center">Register</h2>
+    <div class="panel panel-default">
+		<div class="panel-heading text-center">
+				<h3><strong> Register</strong></h3>
+		</div>
+	<div class="panel-body">
     <form  (ngSubmit)="onSubmit(f.value)" #f="ngForm">
         <div class="form-group">
             <label for="username">Username</label>
@@ -18,10 +22,11 @@
             <input type="email" class="form-control" name="email" ngModel required />
         </div>
         <div class="form-group text-right">
-            <button [disabled]="loading" class="btn btn-primary">Sign In</button>
+            <button [disabled]="loading" class="btn btn-primary">Sign Up</button>
         </div>
     </form>
     <div *ngFor="let alert of alerts">
         <alert type="danger" dismissOnTimeout="4000">ERROR:  {{ alert.msg }}</alert>
     </div>
+</div>
 </div>

@@ -38,7 +38,11 @@ export class RegistrosComponent implements OnInit{
             ); 
     }
 
-    onClick(registro: string,longitud: string){
+    signals(registro: string,longitud: string){
         this.router.navigate(['/Graficas',registro], {queryParams: {duracion: longitud}});
+    }
+
+    derivada(registro: string, longitud: string){
+        this.router.navigate(['/Graficas',registro+'/derivada'], {queryParams: {duracion: longitud}});
     }
 }

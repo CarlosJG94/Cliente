@@ -74,7 +74,8 @@ export class GraficaComponent implements OnInit{
                 data: this.obtenerDatos(),
                 color: '#08088A',
                 allowPointSelect: true,
-                type: 'spline'
+                type: 'spline',
+                id: 'dataseries',
             }]
         };
     }
@@ -119,7 +120,8 @@ export class GraficaComponent implements OnInit{
                 data: this.obtenerDatos(),
                 color: '#08088A',
                 allowPointSelect: true,
-                type: 'spline'
+                type: 'spline',
+                id: 'dataseries',
             }]
         };
     }
@@ -143,6 +145,7 @@ export class GraficaComponent implements OnInit{
             });
         }
         if(this.configuracion.activa != 0) this.pintarEscalas();
+        this.anotaciones();
     }
 
     pintarEscalas(){
@@ -156,6 +159,27 @@ export class GraficaComponent implements OnInit{
         }
     }
 
+    anotaciones(){
+       
+        this.chart.addSeries({
+                name: 'Events',
+                            data: [],
+                            onSeries: 'dataseries',
+                            type: 'flags',
+                            shape: 'circlepin',
+                            width: 20,  
+                            height: 15,          
+        });
+        
+        for(var i=0; i<this.grafica.anotaciones.length;i++){
+            this.chart.series[1].addPoint({
+                x: this.grafica.anotaciones[i].coordenada,
+                title: this.grafica.anotaciones[i].nombre,
+        })
+
+        }
+    }
+
     onSubmit(value:any){
         var configuracionAux: ConfiguracionY = { activa: true, id: this.grafica.configuracionY.id, max: Number.parseFloat(value.maximo), min: Number.parseFloat(value.minimo), tick: Number.parseFloat(value.tick)}; 
         this.grafica.configuracionY = configuracionAux;
@@ -165,9 +189,27 @@ export class GraficaComponent implements OnInit{
 
     reset(){
         this.grafica.configuracionY.activa = false;
-        this.reload();
         this._configurationService.changeConfigurationY(this.grafica.configuracionY);
     }
 
+    prueba(){
+        this.chart.addSeries({
+                name: 'Events',
+                            data: [],
+                            onSeries: 'dataseries',
+                            type: 'flags',
+                            shape: 'circlepin',            
+        });
+
+        this.chart.series[1].addPoint({
+            x: 7,
+            title: 'P',
+            onSeries: 'dataseries',
+            type: 'flags',
+            shape: 'circlepin',
+        })
+    }
 }
+
+
 
