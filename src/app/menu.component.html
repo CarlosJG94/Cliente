@@ -1,14 +1,14 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" [routerLink]="['/Graficas']">BD Thoracic Impedance</a>
+          <a class="navbar-brand" [routerLink]="['/Graficas']"><strong><span style="color:white">BD Thoracic Impedance</span></strong></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a [routerLink]="['/Records']"><span class="glyphicon glyphicon-folder-open"></span>    Records</a></li>
-            <li><a [routerLink]="['/Upload']"><span class="glyphicon glyphicon-cloud-upload"></span>  Upload</a></li>
-            <li><a><span class="glyphicon glyphicon-user"></span> {{usuario}}</a></li>
-            <li><a [routerLink]="['/Login']" (click)="loginOrOut()"><span class="glyphicon glyphicon-log-in"></span> {{loginLogoutText}}</a></li>
+            <li><a [routerLink]="['/Records']"><span style="color:white"><span class="glyphicon glyphicon-folder-open"></span>   Records</span></a></li>
+            <li><a [routerLink]="['/Upload']"><span style="color:white"><span class="glyphicon glyphicon-cloud-upload"></span>   Upload</span></a></li>
+            <li><a><span style="color:white"><span class="glyphicon glyphicon-user"></span> {{usuario}}</span></a></li>
+            <li><a [routerLink]="['/Login']" (click)="loginOrOut()"><span style="color:white"><span class="glyphicon glyphicon-log-in"></span> {{loginLogoutText}}</span></a></li>
           </ul>   
         </div>
       </div>

@@ -1,9 +1,4 @@
 
-<div *ngFor="let alert of alerts">
-  <alert type="danger" dismissOnTimeout="4000">ERROR:  {{ alert.msg }}</alert>
-</div>
-
-
 <div class= "form-inline text-center" >
     <label for="formGroupExampleInput">{{registro}}</label>
     <button (click)="principio()" class="btn btn-default" ><span class="glyphicon glyphicon-step-backward"></span></button> 
@@ -34,6 +29,11 @@
 </div>
 
 <br>
+
+<div *ngFor="let alert of alerts">
+  <alert type="danger" dismissOnTimeout="4000">ERROR:  {{ alert.msg }}</alert>
+</div>
+
 <div  *ngIf="signal" class="form-inline text-center">
   <div *ngFor="let i of graficas; let k = index" class="form-group">
     <button  (click)=ocultar(k) class="btn" [ngClass]="{ 'btn-primary': visualizar[k], 'btn-secondary': !visualizar[k]}">
@@ -43,6 +43,7 @@
   </div>
   
 </div>
+
 
 <grafica *ngFor="let i of graficas; let k = index" [grafica]="graficas[k]" [mostrar]="visualizar[k]"></grafica>
 

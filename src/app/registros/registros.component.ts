@@ -43,6 +43,6 @@ export class RegistrosComponent implements OnInit{
     }
 
     derivada(registro: string, longitud: string){
-        this.router.navigate(['/Graficas',registro+'/derivada'], {queryParams: {duracion: longitud}});
+        this.router.navigate(['/Derivada',registro]);
     }
 }

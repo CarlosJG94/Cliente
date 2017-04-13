@@ -44,6 +44,24 @@ export class SharedService {
             .catch(error => Observable.throw(error.json()));
     }
 
+    getDerivada(registro:string, segmento) {
+   
+        let params = new URLSearchParams();
+        params.set('segmento', segmento);
+        let headers = new Headers();
+        headers.append('authorization',localStorage.getItem('token'))
+        let options = new RequestOptions({
+              headers: headers,
+              search: params
+        });
+        
+        return this._http.get(this.registrosURL+'/'+this.getUsuario()+'/'+registro+'/derivada',options)
+            .map(response => {
+                { return response.json() };
+            })
+            .catch(error => Observable.throw(error.json()));
+    }
+
     getRegistros(){
         return this._http.get(this.registrosURL+'/'+this.getUsuario(),this.obtenerCabecera())
             .map(response => {

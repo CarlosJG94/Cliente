@@ -146,7 +146,8 @@ export class GraficasComponent implements OnInit {
 
     getIntervalo(desde: string,hasta: string){
       
-        if(Number.parseInt(desde) < 0 || Number.parseInt(hasta) <= Number.parseInt(desde)) this.notificar("El intervalo introducido no es valido");
+        if(Number.parseInt(desde) < 0 || Number.parseInt(hasta) <= Number.parseInt(desde) || desde == '' || hasta == '') 
+            this.notificar("El intervalo introducido no es valido");
         else{
             this.from = Number.parseInt(desde);
             this.to = Number.parseInt(hasta);

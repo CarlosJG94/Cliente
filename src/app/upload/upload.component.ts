@@ -14,7 +14,7 @@ export class UploadComponent implements OnInit{
     espera: boolean = false;
     aux: string;
     cabecera: File;
-    files: File[];
+    files: File[]  = [];
     alerts: any = []; 
     nombres: string;
 
@@ -25,10 +25,11 @@ export class UploadComponent implements OnInit{
 	}
 
     submitForm(value: any){
-        this.espera = true;
+        
         let formData: FormData = new FormData();
-        if(this.files.length == 0) this.notificar('Se debe adjuntar al menos un Archivo adicional', "warning");
+        if(this.files.length == 0 || this.cabecera == null) this.notificar('Se debe adjuntar un archivo cabecera y sus adjuntos', "warning");
         else{
+        this.espera = true;
         for (let i = 0; i < this.files.length; i++) {
             formData.append("files", this.files[i], this.files[i].name);
         }

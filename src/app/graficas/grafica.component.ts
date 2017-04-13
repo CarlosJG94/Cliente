@@ -57,7 +57,7 @@ export class GraficaComponent implements OnInit{
                         return (this.value) + 's';
                     }
                 },  
-                tickInterval: 1,
+                
             },
             yAxis: {
                 gridLineColor: 'black',
@@ -67,7 +67,8 @@ export class GraficaComponent implements OnInit{
                 },
                 scrollbar: {
                     enabled: true,
-                }
+                },
+                
             },
 
             series: [{ 
@@ -168,7 +169,9 @@ export class GraficaComponent implements OnInit{
                             type: 'flags',
                             shape: 'circlepin',
                             width: 20,  
-                            height: 15,          
+                            height: 15, 
+                            draggableY: true,
+                            dragMinY: 0,         
         });
         
         for(var i=0; i<this.grafica.anotaciones.length;i++){
