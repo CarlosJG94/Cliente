@@ -8,5 +8,6 @@ export interface Grafica {
 	latidos: any[];
 	anotaciones: Anotacion[],
 	valorEscala: string;
+	sizeSegment: number;
 	configuracionY: ConfiguracionY;
 }

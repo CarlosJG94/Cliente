@@ -21,6 +21,8 @@ export class GraficaComponent implements OnInit{
     options: Object;
     chart: any;
     configuracion: Configuracion;
+    maxAux: number;
+    minAux: number;
 
     constructor(private _configurationService: ConfigurationService){ }
 
@@ -30,8 +32,7 @@ export class GraficaComponent implements OnInit{
         this._configurationService.configuracionChange.subscribe((configuracion: Configuracion) => {
             this.configuracion = configuracion;
             if(!this.grafica.configuracionY.activa) this.reload()
-            else this.reload2();
-            
+            else this.reload2();           
         });
         if(!this.grafica.configuracionY.activa) this.reload();
         else this.reload2();
@@ -42,7 +43,8 @@ export class GraficaComponent implements OnInit{
              title: {    
                 align: 'right',          
                 text : this.grafica.titulo
-            },            
+            },    
+                    
 			rangeSelector: {
             	selected: 1
         	},
@@ -184,6 +186,9 @@ export class GraficaComponent implements OnInit{
     }
 
     onSubmit(value:any){
+        var extremes = this.chart.yAxis[0].getExtremes();
+        this.maxAux = extremes.max;
+        this.minAux = extremes.min;
         var configuracionAux: ConfiguracionY = { activa: true, id: this.grafica.configuracionY.id, max: Number.parseFloat(value.maximo), min: Number.parseFloat(value.minimo), tick: Number.parseFloat(value.tick)}; 
         this.grafica.configuracionY = configuracionAux;
         this._configurationService.changeConfigurationY(configuracionAux);
@@ -191,26 +196,12 @@ export class GraficaComponent implements OnInit{
     }
 
     reset(){
-        this.grafica.configuracionY.activa = false;
-        this._configurationService.changeConfigurationY(this.grafica.configuracionY);
-    }
-
-    prueba(){
-        this.chart.addSeries({
-                name: 'Events',
-                            data: [],
-                            onSeries: 'dataseries',
-                            type: 'flags',
-                            shape: 'circlepin',            
-        });
-
-        this.chart.series[1].addPoint({
-            x: 7,
-            title: 'P',
-            onSeries: 'dataseries',
-            type: 'flags',
-            shape: 'circlepin',
-        })
+        if(this.maxAux != null){
+            this.grafica.configuracionY.activa = false;
+            this._configurationService.changeConfigurationY(this.grafica.configuracionY);
+            this.chart.yAxis[0].setExtremes(this.maxAux,this.minAux);
+        }
+        
     }
 }
 

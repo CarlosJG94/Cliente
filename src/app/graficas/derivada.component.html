@@ -1,14 +1,7 @@
 
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <div class= "form-inline">
       <div class="input-group"><h4><strong>{{registro}}</strong></h4></div>
-        <div class="form-group pull-right">
-          <button (click)="retrocederSegmento()" class="btn btn-default"><span class="glyphicon glyphicon-backward"></span></button>
-          <div class="form-group"><label>Segment: {{segmento}}</label></div>
-          <button (click)="avanzarSegmento()" class="btn btn-default"><span class ="glyphicon glyphicon-forward"></span></button>
-        </div>
-    </div>
   </div>
 </div> 
 
@@ -16,14 +9,51 @@
   <alert type="danger" dismissOnTimeout="4000">ERROR:  {{ alert.msg }}</alert>
 </div>
 
- <chart [options]="options" (load)="saveChart($event.context)" (selection)="onChartSelection($event)" style="min-width: 940px; min-height: 450px; float: left" >
-            <series>
-              <point (select)="onPointSelect($event)"></point>
-            </series> 
+ <chart [options]="options" (load)="saveChart($event.context)" style="min-width: 932px; min-height: 460px; float: left" >
+    <series>
+        <point (select)="onPointSelect($event)" ></point>
+    </series>
   </chart>
 
 
-  <div style="width: 200px; float: left">
+  <div style="width: 208px; float: left">
+    <div class= "form-inline" style="padding-bottom: 5px; padding-left: 20px">
+        <div class="form-group"  style="padding-bottom: 20px;">
+          <button (click)="retrocederSegmento()" class="btn btn-default"><span class="glyphicon glyphicon-backward"></span></button>
+          <div class="form-group"><label>Segment: {{segmento}}</label></div>
+          <button (click)="avanzarSegmento()" class="btn btn-default"><span class ="glyphicon glyphicon-forward"></span></button>
+        </div>     
+    </div>
+ 
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">Configuration Segment</h4>
+      </div>
+      <div class="modal-body text-center">
+          <label>Current Segment Size: {{sizeSegmento}}</label>
+          <div class="form-inline">
+            <input type="number" class="form-control" aria-describedby="segmentHelp" min="10" style="width: 200px" #size  placeholder="seconds">
+            <button (click)="changeSize(size.value)" class="btn btn-info"> Change</button>
+          </div>
+          <small id="segmentHelp" class="form-text text-muted">Any changes in the segment will eliminate annotations.</small>
+          <div *ngFor="let alert of alerts2">
+            <alert type="{{alert.type}}" dismissOnTimeout="4000">{{ alert.msg }}</alert>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button id="closeModal" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+    
     <div class="panel panel-info">
       <div class="panel-heading text-center"><label>Calculated values</label></div>
   <!-- Table -->
@@ -46,3 +76,38 @@
     </div>
 </div>
 
+<div class="form-group"  style="text-align: right;">
+  <a type="button" class="btn btn-default align: right" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-cog"></span></a>
+  <a id="openModalButton" type="button" data-toggle="modal" data-target="#point" style="visibility: 'hidden';"></a>
+</div>
+
+<!-- Modal -->
+<div id="point" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">Change Parameter</h4>
+      </div>
+      <div class="modal-body text-center">
+          <label>Value of the selected point: {{pointSelected}}</label>
+          <div class="form-group">
+            <label>Description Change</label>
+          </div>
+          <textarea rows="5" cols="40" name="comment" #descripcion></textarea>
+          <div class="form-group">
+            <label>Select parameter to change:</label>
+          </div>
+            <button  type="button" class="btn btn-info" (click) = "changePoint(4,descripcion.value)" >B</button>
+            <button  type="button" class="btn btn-info" (click) = "changePoint(5,descripcion.value)" >E</button>
+            <button  type="button" class="btn btn-info" (click) = "changePoint(6,descripcion.value)" >X</button>
+      </div>
+      <div class="modal-footer">
+        <button id="closeModal2" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

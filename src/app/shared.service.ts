@@ -2,6 +2,7 @@ import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Http, Headers, Response,RequestOptions, URLSearchParams } from "@angular/http";
 import 'rxjs/Rx';
 import { Observable } from "rxjs";
+import { Grafica } from './graficas/grafica.model';
 
 @Injectable()
 export class SharedService {
@@ -60,6 +61,24 @@ export class SharedService {
                 { return response.json() };
             })
             .catch(error => Observable.throw(error.json()));
+    }
+
+    putDerivada(registro:string, segmento: string, grafica: Grafica){
+
+        let params = new URLSearchParams();
+        params.set('segmento', segmento);
+        let headers = new Headers();
+        headers.append('authorization',localStorage.getItem('token'))
+        let options = new RequestOptions({
+              headers: headers,
+              search: params
+        });
+
+        return this._http.put(this.registrosURL+'/'+this.getUsuario()+'/'+registro+'/derivada',grafica,options)
+            .map(response => {
+                {  return response; };
+            })
+            .catch(error => Observable.throw(error));
     }
 
     getRegistros(){

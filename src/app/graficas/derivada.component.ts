@@ -7,6 +7,7 @@ import { Grafica } from './grafica.model';
 import { GraficaComponent } from './grafica.component';
 import { AlertModule } from 'ng2-bootstrap/alert';
 import { Router, Params, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -22,17 +23,23 @@ export class DerivadaComponent implements OnInit {
     options: Object;
     chart: any;
     alerts: any = []; 
+    alerts2: any = []; 
     SV: number;
     CO: number;
     SI: number;
     CI: number;
+    sizeSegmento: number;
+    pointSelected: number;
+    aux: boolean;
 
     constructor(private _sharedService: SharedService, private route: ActivatedRoute){}
 
     ngOnInit() {
         this.registro = this.route.snapshot.params['id'];
         this.segmento = 1;
+        this.aux = false;
         this.obtenerGrafica();
+        
     }
 
 
@@ -42,29 +49,50 @@ export class DerivadaComponent implements OnInit {
             .subscribe(
             lstresult => { 
                 this.grafica = lstresult;
+                this.sizeSegmento = this.grafica.sizeSegment;
                 this.reload();
             },
             error => {
                 this.segmento--;
-                this.notificar('No existen más segmentos');
+                this.notificar('Error: No existen más segmentos',0,"danger");
+            }
+            ); 
+        }
+
+    modificarSegmento() {
+        
+        this._sharedService.putDerivada(this.registro,this.segmento.toString(),this.grafica)
+            .subscribe(
+            lstresult => { 
+                if(this.aux) {
+                    this.segmento = 1;
+                    this.aux = false;
+                }
+                this.obtenerGrafica();
+                document.getElementById("closeModal").click();
+                document.getElementById("closeModal2").click();
+            },
+            error => {
+                this.notificar('El Tamaño del segmento no es valido',1,"danger");
             }
             ); 
         }
 
     reload(){
  		this.options = {
+             chart:{
+                zoomType: 'x'
+             },
              title: {    
                 align: 'right',          
                 text : this.grafica.titulo
-            },            
-			rangeSelector: {
-            	selected: 1
-        	},
+            },          
+
              legend: {
                 enabled: false
             },
-            zoomType: 'x',
             xAxis: {
+                minRange: 100,
                 gridLineColor: 'black',
                 gridLineWidth: 0.5,
                 labels: {
@@ -72,8 +100,9 @@ export class DerivadaComponent implements OnInit {
                         return (this.value) + 'ms';
                     }
                 },  
+            
                 title: {
-                    text: (this.segmento*30-30)+'-'+(this.segmento)*30+'sec'
+                    text: (this.segmento*this.sizeSegmento-this.sizeSegmento)+'-'+(this.segmento)*this.sizeSegmento+'sec'
                 },
                 tickInterval: 100,
             },
@@ -155,8 +184,25 @@ export class DerivadaComponent implements OnInit {
         this.obtenerGrafica();
     }
 
-    notificar(mensaje: string): void {
-        this.alerts.push({msg: mensaje});
+    changeSize(size: any){
+        this.grafica.sizeSegment = size;
+        this.aux = true;
+        this.modificarSegmento();
+    }
+
+    notificar(mensaje: string,aux: number,tipo: string): void {
+        if(aux == 0) this.alerts.push({msg: mensaje});
+        else this.alerts2.push({msg: mensaje, type: tipo});
+    }
+
+    onPointSelect(e){
+        this.pointSelected = e.context.x;
+        document.getElementById("openModalButton").click();
+    }
+
+    changePoint(i:number,value: string){
+        this.grafica.anotaciones[i].coordenada = this.pointSelected;
+        this.modificarSegmento();
     }
 
     
