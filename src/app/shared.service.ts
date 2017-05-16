@@ -38,7 +38,7 @@ export class SharedService {
               search: params
           });
         
-        return this._http.get(this.registrosURL+'/'+this.getUsuario()+'/'+registro,options)
+        return this._http.get(this.registrosURL+'/'+registro,options)
             .map(response => {
                 { return response.json() };
             })
@@ -56,7 +56,7 @@ export class SharedService {
               search: params
         });
         
-        return this._http.get(this.registrosURL+'/'+this.getUsuario()+'/'+registro+'/derivada',options)
+        return this._http.get(this.registrosURL+'/'+registro+'/Averaged',options)
             .map(response => {
                 { return response.json() };
             })
@@ -74,7 +74,7 @@ export class SharedService {
               search: params
         });
 
-        return this._http.put(this.registrosURL+'/'+this.getUsuario()+'/'+registro+'/derivada',grafica,options)
+        return this._http.put(this.registrosURL+'/'+registro+'/Averaged',grafica,options)
             .map(response => {
                 {  return response; };
             })
@@ -82,7 +82,7 @@ export class SharedService {
     }
 
     getRegistros(){
-        return this._http.get(this.registrosURL+'/'+this.getUsuario(),this.obtenerCabecera())
+        return this._http.get(this.registrosURL,this.obtenerCabecera())
             .map(response => {
                 {  return response.json(); };
             })
@@ -91,7 +91,7 @@ export class SharedService {
 
     uploadRegister(formData: FormData){
 
-        return this._http.post(this.registrosURL+'/'+this.getUsuario(),formData,this.obtenerCabecera())
+        return this._http.post(this.registrosURL,formData,this.obtenerCabecera())
             .map(response => {  
                  return response;
             })

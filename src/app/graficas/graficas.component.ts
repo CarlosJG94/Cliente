@@ -87,7 +87,7 @@ export class GraficasComponent implements OnInit {
                 }
             },
             error => {
-                this.notificar('El parametro introducido excede el tamaño del registro');
+                 this.notificar('El parametro introducido excede el tamaño del registro');
                  this.from = this.from - this.desplazamiento,
                  this.to = this.to - this.desplazamiento;
             }
@@ -175,6 +175,7 @@ export class GraficasComponent implements OnInit {
     }
 
     notificar(mensaje: string): void {
+        this.alerts = [];
         this.alerts.push({msg: mensaje});
     }
 

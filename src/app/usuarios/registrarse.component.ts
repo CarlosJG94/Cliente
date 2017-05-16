@@ -8,7 +8,7 @@ import { SharedService } from '../shared.service';
 })
 export class RegistrarseComponent {
 
-      alerts: any = []; 
+  alerts: any = []; 
 
   constructor(private _sharedService: SharedService, private router: Router) {}
 
@@ -18,7 +18,6 @@ export class RegistrarseComponent {
         let formData: FormData = new FormData();
         formData.append("username",value.username);
         formData.append("password",value.password);
-        formData.append('password2',value.password2);
         formData.append('email',value.email);
 
         this._sharedService.registrarse(formData)
@@ -40,6 +39,7 @@ export class RegistrarseComponent {
   }
 
     notificar(mensaje: string): void {
+        this.alerts = [];
         this.alerts.push({msg: mensaje});
     }
 }

@@ -73,7 +73,8 @@ export class DerivadaComponent implements OnInit {
                 document.getElementById("closeModal2").click();
             },
             error => {
-                this.notificar('El Tamaño del segmento no es valido',1,"danger");
+                    this.notificar(error.text(),1,"danger");
+                    this.obtenerGrafica();
             }
             ); 
         }
@@ -191,6 +192,8 @@ export class DerivadaComponent implements OnInit {
     }
 
     notificar(mensaje: string,aux: number,tipo: string): void {
+        this.alerts = [];
+        this.alerts2 = [];
         if(aux == 0) this.alerts.push({msg: mensaje});
         else this.alerts2.push({msg: mensaje, type: tipo});
     }
@@ -200,7 +203,7 @@ export class DerivadaComponent implements OnInit {
         document.getElementById("openModalButton").click();
     }
 
-    changePoint(i:number,value: string){
+    changePoint(i:number){
         this.grafica.anotaciones[i].coordenada = this.pointSelected;
         this.modificarSegmento();
     }

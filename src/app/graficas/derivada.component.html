@@ -92,18 +92,19 @@
         <h4 class="modal-title text-center">Change Parameter</h4>
       </div>
       <div class="modal-body text-center">
-          <label>Value of the selected point: {{pointSelected}}</label>
-          <div class="form-group">
-            <label>Description Change</label>
-          </div>
-          <textarea rows="5" cols="40" name="comment" #descripcion></textarea>
+          
           <div class="form-group">
             <label>Select parameter to change:</label>
           </div>
-            <button  type="button" class="btn btn-info" (click) = "changePoint(4,descripcion.value)" >B</button>
-            <button  type="button" class="btn btn-info" (click) = "changePoint(5,descripcion.value)" >E</button>
-            <button  type="button" class="btn btn-info" (click) = "changePoint(6,descripcion.value)" >X</button>
-      </div>
+            <button  type="button" class="btn btn-info" (click) = "changePoint(4)" >B</button>
+            <button  type="button" class="btn btn-info" (click) = "changePoint(5)" >E</button>
+            <button  type="button" class="btn btn-info" (click) = "changePoint(6)" >X</button>
+            <div class="form-group"></div>
+            <label>Value of the selected point: {{pointSelected}}</label>
+            <div *ngFor="let alert of alerts2">
+              <alert type="danger" dismissOnTimeout="4000">ERROR:  {{ alert.msg }}</alert>
+          </div>
+     </div>
       <div class="modal-footer">
         <button id="closeModal2" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>

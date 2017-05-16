@@ -30,6 +30,7 @@ export class LoginComponent {
   }
 
     notificar(mensaje: string): void {
+        this.alerts = [];
         this.alerts.push({msg: mensaje});
     }
 
