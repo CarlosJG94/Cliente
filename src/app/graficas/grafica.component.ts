@@ -148,11 +148,11 @@ export class GraficaComponent implements OnInit{
             });
         }
         if(this.configuracion.activa != 0) this.pintarEscalas();
-        this.anotaciones();
     }
 
     pintarEscalas(){
-        for(var i=this.grafica.y[0]; i<this.grafica.x.length; i = i + this.configuracion.escalaX){
+
+        for(var i=this.grafica.y[0]; i<= this.grafica.y[this.grafica.y.length-1]; i = i + this.configuracion.escalaX){
             this.chart.xAxis[0].addPlotLine({
                 value: i,
                 color: 'black',
@@ -193,6 +193,7 @@ export class GraficaComponent implements OnInit{
         this.grafica.configuracionY = configuracionAux;
         this._configurationService.changeConfigurationY(configuracionAux);
         this.reload2();
+        document.getElementById("closeModal").click();
     }
 
     reset(){
@@ -201,7 +202,10 @@ export class GraficaComponent implements OnInit{
             this._configurationService.changeConfigurationY(this.grafica.configuracionY);
             this.chart.yAxis[0].setExtremes(this.maxAux,this.minAux);
         }
-        
+        else{
+            this.grafica.configuracionY.activa = false;
+            this._configurationService.changeConfigurationY(this.grafica.configuracionY);
+        }
     }
 }
 

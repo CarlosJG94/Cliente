@@ -23,7 +23,7 @@ export class RegistrarseComponent {
         this._sharedService.registrarse(formData)
             .subscribe(
             result => {
-                this.router.navigate(['Records']);
+                this.router.navigate(['Upload']);
             },
             error => {
                 if(error.status == 409){

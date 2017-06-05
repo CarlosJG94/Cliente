@@ -40,4 +40,8 @@ export class ConfigurationService {
         this.configuracion.escalaX = valor;
         this.configuracionChange.emit(this.configuracion);
     }
+
+    changeDesplazamiento(valor: number){
+        this.configuracion.desplazamiento = valor;
+    }
 }

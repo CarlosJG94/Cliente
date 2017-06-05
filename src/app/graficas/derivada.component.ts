@@ -11,8 +11,8 @@ import { Observable } from 'rxjs';
 
 
 @Component({
-  selector: 'derivada',
-  templateUrl: './derivada.component.html',
+    selector: 'derivada',
+    templateUrl: './derivada.component.html',
 })
 
 export class DerivadaComponent implements OnInit {
@@ -20,10 +20,11 @@ export class DerivadaComponent implements OnInit {
     registro: string;
     grafica: Grafica;
     segmento: number;
+    duracion: number;
     options: Object;
     chart: any;
-    alerts: any = []; 
-    alerts2: any = []; 
+    alerts: any = [];
+    alerts2: any = [];
     SV: number;
     CO: number;
     SI: number;
@@ -32,39 +33,39 @@ export class DerivadaComponent implements OnInit {
     pointSelected: number;
     aux: boolean;
 
-    constructor(private _sharedService: SharedService, private route: ActivatedRoute){}
+    constructor(private _sharedService: SharedService, private route: ActivatedRoute,private router: Router) { }
 
     ngOnInit() {
         this.registro = this.route.snapshot.params['id'];
         this.segmento = 1;
         this.aux = false;
+        this.duracion = Number.parseInt(this.route.snapshot.queryParams['duracion']);
         this.obtenerGrafica();
-        
+
     }
 
 
-     obtenerGrafica() { 
+    obtenerGrafica() {
 
-        this._sharedService.getDerivada(this.registro,this.segmento)
+        this._sharedService.getDerivada(this.registro, this.segmento)
             .subscribe(
-            lstresult => { 
+            lstresult => {
                 this.grafica = lstresult;
                 this.sizeSegmento = this.grafica.sizeSegment;
                 this.reload();
             },
             error => {
                 this.segmento--;
-                this.notificar('Error: No existen más segmentos',0,"danger");
             }
-            ); 
-        }
+            );
+    }
 
     modificarSegmento() {
-        
-        this._sharedService.putDerivada(this.registro,this.segmento.toString(),this.grafica)
+
+        this._sharedService.putDerivada(this.registro, this.segmento.toString(), this.grafica)
             .subscribe(
-            lstresult => { 
-                if(this.aux) {
+            lstresult => {
+                if (this.aux) {
                     this.segmento = 1;
                     this.aux = false;
                 }
@@ -73,23 +74,23 @@ export class DerivadaComponent implements OnInit {
                 document.getElementById("closeModal2").click();
             },
             error => {
-                    this.notificar(error.text(),1,"danger");
-                    this.obtenerGrafica();
+                this.notificar(error.text(), 1, "danger");
+                this.obtenerGrafica();
             }
-            ); 
-        }
+            );
+    }
 
-    reload(){
- 		this.options = {
-             chart:{
+    reload() {
+        this.options = {
+            chart: {
                 zoomType: 'x'
-             },
-             title: {    
-                align: 'right',          
-                text : this.grafica.titulo
-            },          
+            },
+            title: {
+                align: 'center',
+                text: this.grafica.titulo
+            },
 
-             legend: {
+            legend: {
                 enabled: false
             },
             xAxis: {
@@ -100,10 +101,10 @@ export class DerivadaComponent implements OnInit {
                     formatter: function () {
                         return (this.value) + 'ms';
                     }
-                },  
-            
+                },
+
                 title: {
-                    text: (this.segmento*this.sizeSegmento-this.sizeSegmento)+'-'+(this.segmento)*this.sizeSegmento+'sec'
+                    text: (this.segmento * this.sizeSegmento - this.sizeSegmento) + '-' + (this.segmento) * this.sizeSegmento + 'sec'
                 },
                 tickInterval: 100,
             },
@@ -116,7 +117,7 @@ export class DerivadaComponent implements OnInit {
                 tickInterval: 1,
             },
 
-            series: [{ 
+            series: [{
                 data: this.obtenerDatos(),
                 color: '#08088A',
                 allowPointSelect: true,
@@ -126,12 +127,12 @@ export class DerivadaComponent implements OnInit {
         };
     }
 
-    obtenerDatos(){
+    obtenerDatos() {
         var mySeries = [];
         for (var i = 0; i < this.grafica.x.length; i++) {
             mySeries.push([this.grafica.y[i], this.grafica.x[i]]);
         }
-        return mySeries;   
+        return mySeries;
     }
 
     saveChart(chart) {
@@ -140,73 +141,81 @@ export class DerivadaComponent implements OnInit {
         this.corte();
     }
 
-    anotaciones(){
-       
+    anotaciones() {
+
         this.chart.addSeries({
-                name: 'Events',
-                            data: [],
-                            onSeries: 'dataseries',
-                            type: 'flags',
-                            shape: 'circlepin',
-                            width: 20,  
-                            height: 15,          
+            name: 'Events',
+            data: [],
+            onSeries: 'dataseries',
+            type: 'flags',
+            shape: 'circlepin',
+            width: 20,
+            height: 15,
         });
         this.SV = this.grafica.anotaciones[0].coordenada;
         this.CO = this.grafica.anotaciones[1].coordenada;
         this.SI = this.grafica.anotaciones[2].coordenada;
         this.CI = this.grafica.anotaciones[3].coordenada;
-        for(var i=4; i<this.grafica.anotaciones.length;i++){
+        for (var i = 4; i < this.grafica.anotaciones.length; i++) {
             this.chart.series[1].addPoint({
                 x: this.grafica.anotaciones[i].coordenada,
                 title: this.grafica.anotaciones[i].nombre,
-        })
+            })
 
         }
     }
 
-    corte(){
-            this.chart.yAxis[0].addPlotLine({
-                value: 0,
-                color: 'black',
-                width: 1.5,
-            });
-        
+    corte() {
+        this.chart.yAxis[0].addPlotLine({
+            value: 0,
+            color: 'black',
+            width: 1.5,
+        });
+
     }
 
-    retrocederSegmento(){
-        if(!(this.segmento == 1)){
+    retrocederSegmento() {
+        if (!(this.segmento == 1)) {
             this.segmento--;
             this.obtenerGrafica();
         }
     }
 
-    avanzarSegmento(){
+    avanzarSegmento() {
         this.segmento++;
         this.obtenerGrafica();
     }
 
-    changeSize(size: any){
+    changeSize(size: any) {
         this.grafica.sizeSegment = size;
         this.aux = true;
         this.modificarSegmento();
     }
 
-    notificar(mensaje: string,aux: number,tipo: string): void {
+    notificar(mensaje: string, aux: number, tipo: string): void {
         this.alerts = [];
         this.alerts2 = [];
-        if(aux == 0) this.alerts.push({msg: mensaje});
-        else this.alerts2.push({msg: mensaje, type: tipo});
+        if (aux == 0) this.alerts.push({ msg: mensaje });
+        else this.alerts2.push({ msg: mensaje, type: tipo });
     }
 
-    onPointSelect(e){
+    onPointSelect(e) {
         this.pointSelected = e.context.x;
         document.getElementById("openModalButton").click();
     }
 
-    changePoint(i:number){
+    changePoint(i: number) {
         this.grafica.anotaciones[i].coordenada = this.pointSelected;
         this.modificarSegmento();
     }
 
-    
+    calculados(){
+        this.router.navigate(['/Calculados',this.registro], {queryParams: {duracion: this.duracion}});
+    }
+
+    signals(){
+        this.router.navigate(['/Graficas',this.registro], {queryParams: {duracion: this.duracion}});
+    }
+
+
 }

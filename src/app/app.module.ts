@@ -19,6 +19,7 @@ import { SharedService } from "./shared.service";
 import { ConfigurationService } from './configuration.service';
 import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
 import { DerivadaComponent } from './graficas/derivada.component'
+import { CalculadosComponent } from './graficas/calculados.component'
 
 
 
@@ -27,7 +28,7 @@ export function highchartsFactory() {
 } 
 
 @NgModule({
-  declarations: [AppComponent, GraficaComponent, MenuComponent,GraficasComponent,DerivadaComponent, RegistrarseComponent, RegistrosComponent ,UploadComponent, LoginComponent],
+  declarations: [AppComponent, GraficaComponent, MenuComponent,CalculadosComponent,GraficasComponent,DerivadaComponent, RegistrarseComponent, RegistrosComponent ,UploadComponent, LoginComponent],
   imports: [
     BrowserModule, 
     FormsModule, 

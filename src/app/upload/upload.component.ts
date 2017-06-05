@@ -33,6 +33,7 @@ export class UploadComponent implements OnInit{
         for (let i = 0; i < this.files.length; i++) {
             formData.append("files", this.files[i], this.files[i].name);
         }
+    
         formData.append("cabecera",this.cabecera,this.cabecera.name);
         formData.append("sex", value.sex);
         formData.append("age",value.age);

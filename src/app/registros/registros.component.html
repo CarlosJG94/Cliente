@@ -1,6 +1,7 @@
-
-  <div class="panel panel-primary text-center">
-      <div class="panel-heading text-center"><h4>Records <span class="glyphicon glyphicon-folder-open"></span></h4></div>
+<div class="panel panel-primary text-center">
+  <div class="panel-heading text-center">
+    <h4>Records <span class="glyphicon glyphicon-folder-open"></span></h4>
+  </div>
   <!-- Table -->
   <table class="table table-striped text-center">
     <thead>
@@ -14,22 +15,32 @@
         <th class="text-center">Width(Kg)</th>
       </tr>
     </thead>
-  <tbody>
-   <tr *ngFor="let registro of registros">
-      <td>{{registro.titulo}}</td>
-      <td>{{registro.duracion}}</td>
-      <td>{{registro.fecha}}</td>
-      <td>{{registro.sexo}}</td>
-      <td>{{registro.edad}}</td>
-      <td>{{registro.altura}}</td>
-      <td>{{registro.peso}}</td>
-      <td><button  class="btn btn-default" (click)=signals(registro.titulo,registro.duracion)>Signals</button></td>
-      <td><button  class="btn btn-default" (click)=derivada(registro.titulo,registro.duracion)>Averaged</button></td>
-    </tr>
+    <tbody>
+      <tr *ngFor="let registro of registros">
+        <td>{{registro.titulo}}</td>
+        <td>{{registro.duracion}}</td>
+        <td>{{registro.fecha}}</td>
+        <td>{{registro.sexo}}</td>
+        <td>{{registro.edad}}</td>
+        <td>{{registro.altura}}</td>
+        <td>{{registro.peso}}</td>
+        <td><button class="btn btn-default" (click)=signals(registro.titulo,registro.duracion)>Signals</button></td>
+        <td><button class="btn btn-default" (click)=derivada(registro.titulo,registro.duracion)>Averaged</button></td>
+        <td><button class="btn btn-default" (click)=calculados(registro.titulo,registro.duracion)>Calculated</button></td>
+      </tr>
     </tbody>
   </table>
 </div>
 
+<div *ngFor="let alert of alerts">
+  <alert type="danger" dismissOnTimeout="4000">ERROR:  {{ alert.msg }}</alert>
+</div>
 
-
-
+<div class="panel  text-center">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" (click)="retroceder()"> < Previous</a></li>
+      <li class="page-item"><a class="page-link" (click)="avanzar()">Next ></a></li>
+    </ul>
+  </nav>
+</div>

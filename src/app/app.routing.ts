@@ -5,12 +5,14 @@ import { LoginComponent } from "./usuarios/login.component";
 import { RegistrosComponent } from './registros/registros.component';
 import { RegistrarseComponent } from './usuarios/registrarse.component';
 import { DerivadaComponent } from './graficas/derivada.component'
+import { CalculadosComponent } from './graficas/calculados.component'
 
 const MAINMENU_ROUTES: Routes = [
 
     { path: 'Records', component: RegistrosComponent},
     { path: 'Login', component: LoginComponent },
     { path: 'Graficas/:id', component: GraficasComponent },
+    { path: 'Calculados/:id', component: CalculadosComponent },
     { path: 'Upload', component: UploadComponent },
     { path: 'Registrarse', component: RegistrarseComponent},
     { path: 'Derivada/:id', component: DerivadaComponent }

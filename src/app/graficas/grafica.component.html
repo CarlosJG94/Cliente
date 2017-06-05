@@ -1,7 +1,7 @@
 
 <div *ngIf="mostrar">
 
-  <a type="button" class="btn btn-default btn-sm" data-toggle="modal" [attr.data-target]="'#' + grafica.configuracionY.id"><span class="glyphicon glyphicon-cog"></span></a>
+<a type="button" class="btn btn-default btn-sm"  data-toggle="modal" [attr.data-target]="'#' + grafica.configuracionY.id"><span class="glyphicon glyphicon-cog"></span></a>
   <!-- Modal -->
   <div class="modal fade" [attr.id]="grafica.configuracionY.id" role="dialog">
     <div class="modal-dialog">
@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="modal-footer" >
-          <button type="button" class="btn btn-danger"  data-dismiss="modal">Close</button>
+          <button id="closeModal" type="button" class="btn btn-danger"  data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
@@ -47,5 +47,7 @@
               <point (select)="onPointSelect($event)"></point>
             </series> 
   </chart>
+
+  
 </div>
 

@@ -10,10 +10,10 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 
 
 @Component({
-    selector: 'app-graficas',
-    templateUrl: './graficas.component.html',
+    selector: 'app-calculados',
+    templateUrl: './calculados.component.html',
 })
-export class GraficasComponent implements OnInit {
+export class CalculadosComponent implements OnInit {
 
     signal: boolean = false;
     alerts: any = [];
@@ -31,8 +31,7 @@ export class GraficasComponent implements OnInit {
 
     ngOnInit() {
 
-        this._configurationService.changeDesplazamiento(10);
-        this.desplazamiento = this._configurationService.configuracion.desplazamiento;
+
         if (this._configurationService.configuracion.activa == 0) this.escalas = true;
         else this.escalas = false;
         this._configurationService.configuracionChange.subscribe((configuracion: Configuracion) => {
@@ -45,6 +44,9 @@ export class GraficasComponent implements OnInit {
         });
         this.registro = this.route.snapshot.params['id'];
         this.duracion = Number.parseInt(this.route.snapshot.queryParams['duracion']);
+        this.cambiarEscala(60);
+        this.desplazamiento = this.duracion;
+        this._configurationService.changeDesplazamiento(this.desplazamiento);
         this.from = 0,
             this.to = this.desplazamiento,
             this.obtenerInicial();
@@ -52,7 +54,7 @@ export class GraficasComponent implements OnInit {
 
     obtenerInicial() {
 
-        this._sharedService.getGraficas(this.registro, this.from.toString(), this.to.toString())
+        this._sharedService.getCalulados(this.registro, this.from, this.to)
             .subscribe(
             lstresult => {
                 this.graficas = lstresult;
@@ -79,7 +81,7 @@ export class GraficasComponent implements OnInit {
 
     obtener() {
 
-        this._sharedService.getGraficas(this.registro, this.from.toString(), this.to.toString())
+        this._sharedService.getCalulados(this.registro, this.from.toString(), this.to.toString())
             .subscribe(
             lstresult => {
                 this.graficas = lstresult;
@@ -103,10 +105,8 @@ export class GraficasComponent implements OnInit {
 
     avanzarM() {
         let aux = (this.to - this.from) / 2;
-        
-        this.from = Math.floor(this.from + aux),
-            this.to = Math.floor(this.to + aux);
-        
+        this.from = this.from + aux,
+            this.to = this.to + aux;
         this.obtener();
     }
 
@@ -127,8 +127,8 @@ export class GraficasComponent implements OnInit {
             this.from = 0;
             this.to = this.desplazamiento;
         } else {
-            this.to = Math.floor(this.to - aux),
-                this.from = Math.floor(this.from - aux);
+            this.to = this.to - aux,
+                this.from = this.from - aux;
         }
         this.obtener();
     }
@@ -191,8 +191,8 @@ export class GraficasComponent implements OnInit {
         }
     }
 
-    goToCalculated() {
-        this.router.navigate(['/Calculados', this.registro], { queryParams: { duracion: this.duracion } });
+    goToSignals() {
+        this.router.navigate(['/Graficas', this.registro], { queryParams: { duracion: this.duracion } });
     }
 
     goToAveraged() {

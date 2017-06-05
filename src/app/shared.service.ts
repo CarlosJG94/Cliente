@@ -45,6 +45,26 @@ export class SharedService {
             .catch(error => Observable.throw(error.json()));
     }
 
+    getCalulados(registro:string,from, to) {
+   
+
+        let params = new URLSearchParams();
+        params.set('from', from);
+        params.set('to',to);
+        let headers = new Headers();
+        headers.append('authorization',localStorage.getItem('token'))
+        let options = new RequestOptions({
+              headers: headers,
+              search: params
+          });
+        
+        return this._http.get(this.registrosURL+'/'+registro+'/Calculated',options)
+            .map(response => {
+                { return response.json() };
+            })
+            .catch(error => Observable.throw(error.json()));
+    }
+
     getDerivada(registro:string, segmento) {
    
         let params = new URLSearchParams();
@@ -81,8 +101,17 @@ export class SharedService {
             .catch(error => Observable.throw(error));
     }
 
-    getRegistros(){
-        return this._http.get(this.registrosURL,this.obtenerCabecera())
+    getRegistros(from, to){
+        let params = new URLSearchParams();
+        params.set('from', from);
+        params.set('to',to);
+        let headers = new Headers();
+        headers.append('authorization',localStorage.getItem('token'))
+        let options = new RequestOptions({
+              headers: headers,
+              search: params
+          });
+        return this._http.get(this.registrosURL,options)
             .map(response => {
                 {  return response.json(); };
             })
